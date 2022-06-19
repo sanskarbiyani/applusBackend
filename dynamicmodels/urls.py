@@ -14,7 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.shortcuts import render
 import rest_framework
 from rest_framework.schemas import get_schema_view
 from rest_framework.documentation import include_docs_urls
@@ -22,15 +23,17 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from django.views.generic import TemplateView
-from react import views
+# from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
-# catch_all = TemplateView.as_view(template_name="reactFrontEnd/index.html")
+
+# def render_react(request):
+#     return render(request, "index.html")
+
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     # path('', include('ddmapp.urls')),
-    path('api/',include('ddmapp.urls',namespace='ddmapp_api')),
+    path('api/', include('ddmapp.urls', namespace='ddmapp_api')),
     path('', include('django.contrib.auth.urls')),
     path('project/docs/', include_docs_urls(title='RecuritmentAPI')),
     path('project/schema', get_schema_view(
@@ -44,6 +47,10 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/parser/', include('parserapp.urls', namespace='parserapp')),
     path('api/chat/', include('chat.urls', namespace='chatApp')),
-    path('api/addNotificationTask/', include('notifications.urls', namespace='notifications')),
-    path('reactFrontEnd/', views.render_react),
+    path('api/addNotificationTask/',
+         include('notifications.urls', namespace='notifications')),
+    # re_path(r"^$", render_react),
+    # re_path(r"^(?:.*)/?$", render_react),
 ]
+
+# urlpatterns += staticfiles_urlpatterns()

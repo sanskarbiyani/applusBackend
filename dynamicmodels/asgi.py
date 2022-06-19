@@ -8,14 +8,18 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
 import os
-from channels.auth import AuthMiddlewareStack
 from channels.security.websocket import AllowedHostsOriginValidator
 from channels.routing import ProtocolTypeRouter, URLRouter
 from django.core.asgi import get_asgi_application
-import chat.routing
-from .channelsmiddleware import JwtAuthMiddlewareStack
+import django
+django.setup()
+
+import chat.routing  # nopep8
+from .channelsmiddleware import JwtAuthMiddlewareStack  # nopep8
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dynamicmodels.settings')
+
 
 asgi_application = get_asgi_application()
 application = ProtocolTypeRouter({
