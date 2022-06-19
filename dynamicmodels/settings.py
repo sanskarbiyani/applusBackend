@@ -149,59 +149,86 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
+<< << << < HEAD
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
-    ],
+        == == == =
+
+        REST_FRAMEWORK= {
+            'DEFAULT_PERMISSION_CLASSES': [
+                'rest_framework.permissions.AllowAny',
+                >>>>>> > 95ae8db0fba198080d12019d09c3fa7483f07697
+            ],
+            'DEFAULT_AUTHENTICATION_CLASSES': [
+                'rest_framework_simplejwt.authentication.JWTAuthentication'
+            ],
+            << << << < HEAD
 
 
-}
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://192.168.1.6:3000",
-    "http://localhost:8000",
-    "https://sanskarbiyani.github.io",
-]
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-DATE_INPUT_FORMATS = ['%d-%m-%Y']
-
-STATIC_URL = '/static/'
-STATIC_ROOT = STATIC_DIR
-
-AUTH_USER_MODEL = "users.NewUser"
+        }
+        CORS_ALLOWED_ORIGINS= [
+            "http://localhost:3000",
+            "http://192.168.1.6:3000",
+            "http://localhost:8000",
+            == == == =
 
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'VERIFYING_KEY': None,
-    'AUTH_HEADER_TYPES': ('JWT',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-}
+        }
+        CORS_ALLOWED_ORIGINS= [
+            "http://localhost:3000",
+            "http://192.168.1.6:3000",
+            >>>>>> > 95ae8db0fba198080d12019d09c3fa7483f07697
+            "https://sanskarbiyani.github.io",
+        ]
+        DEFAULT_AUTO_FIELD= 'django.db.models.AutoField'
+        DATE_INPUT_FORMATS= ['%d-%m-%Y']
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.office365.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'Kshitija.Supekar.external@idiada.com'
-EMAIL_HOST_PASSWORD = 'NRp78e6XV$'
+        STATIC_URL= '/static/'
+        STATIC_ROOT= STATIC_DIR
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+        AUTH_USER_MODEL= "users.NewUser"
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
+
+        SIMPLE_JWT= {
+            'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+            'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+            'ROTATE_REFRESH_TOKENS': True,
+            'BLACKLIST_AFTER_ROTATION': True,
+            'ALGORITHM': 'HS256',
+            'SIGNING_KEY': SECRET_KEY,
+            'VERIFYING_KEY': None,
+            'AUTH_HEADER_TYPES': ('JWT',),
+            'USER_ID_FIELD': 'id',
+            'USER_ID_CLAIM': 'user_id',
+            'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+            'TOKEN_TYPE_CLAIM': 'token_type',
+        }
+
+        EMAIL_USE_TLS= True
+        EMAIL_HOST= 'smtp.office365.com'
+        EMAIL_PORT= 587
+        EMAIL_HOST_USER= 'Kshitija.Supekar.external@idiada.com'
+        EMAIL_HOST_PASSWORD= 'NRp78e6XV$'
+
+        MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
+        MEDIA_URL= '/media/'
+
+        CHANNEL_LAYERS= {
+            "default": {
+                "BACKEND": "channels.layers.InMemoryChannelLayer"
+                << << << < HEAD
+            },
+        }
+
+        STATICFILES_STORAGE= "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        == == == =
     },
 }
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'build/static'),
+# ]
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+>>>>>> > 95ae8db0fba198080d12019d09c3fa7483f07697

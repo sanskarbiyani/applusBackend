@@ -7,3 +7,7 @@ whole.json
 */migrations/**/*.py
 */migrations/**/__pycache__
 !*/migrations/**/__init__.py
+/staticfiles
+/media
+/react
+whole.json

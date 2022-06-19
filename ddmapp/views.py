@@ -146,7 +146,6 @@ class CreateModel(viewsets.ModelViewSet):
 # API
 
 class Allgroups(generics.GenericAPIView):
-
     serializer_class = GroupListSerializer
 
     # Define Custom Queryset
@@ -183,7 +182,6 @@ class AllLists(viewsets.ModelViewSet):
 
     def get_object(self, queryset=None, **kwargs):
         item = self.kwargs.get('pk')
-
         return get_object_or_404(List_Database, modelname=item)
 
     # Define Custom Queryset
@@ -447,7 +445,6 @@ class DeleteModel(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         item = self.kwargs.get('name')
-
         obj1 = List_Database.objects.get(modelname=item)
         logs = LogEntries.objects.filter(list=obj1)
         self.perform_destroy(logs)
@@ -739,7 +736,6 @@ class AddNewListToGroup(viewsets.ModelViewSet):
     #         print("64-done")
     #         if reg_serializer.is_valid():
     #             reg_serializer.save()
-
     #         return Response(reg_serializer.data,status=status.HTTP_200_OK)
     #     except Exception as e:
     #         return Response({"error":str(e)},status=status.HTTP_204_NO_CONTENT)
@@ -771,7 +767,6 @@ class LogEntriesDisplay(viewsets.ModelViewSet):
     def get_queryset(self):
         item = self.kwargs.get('model_name')
         return LogEntries.objects.filter(list=List_Database.objects.get(modelname=item)).order_by('-action_time')
-
     # def create(self, request, *args, **kwargs):
     #     newuser=[]
     #     print(request.data)
@@ -798,7 +793,6 @@ class LogEntriesDisplay(viewsets.ModelViewSet):
     #         list2 = self.kwargs.get('pk')
     #         objs = self.get_object()
     #         self.perform_destroy(objs)
-
     #         LogEntries.objects.create(user = request.user, contenttype = "{} Remove  List ( {} ) from {} group.".format(request.user,list1,list2), actionflag = "Create")
     #         #step3 :- Drop Model From SQLite Database
     #         return Response("Delete Sucessfully",status=status.HTTP_200_OK)
@@ -840,7 +834,6 @@ class RequestFormEntryEmail(generics.GenericAPIView):
                 absurl+"?redirect_url="+redirect_url
             data = {'email_body': email_body, 'to_email': 'himanshuchaudhari890@gmail.com',
                     'email_subject': 'Filled Your Information'}
-
             send_mail(
                 'Reset Password Link.',
                 email_body,
@@ -872,14 +865,12 @@ class FormTokenCheckAPI(generics.GenericAPIView):
             if redirect_url and len(redirect_url) > 3:
                 return CustomRedirect(redirect_url+'?token_valid=True&message=Credentials Valid&uidb64='+uidb64+'_'+entry_id+'&token='+token+'_'+modelname)
             else:
-
                 return CustomRedirect(os.environ.get('FRONTEND_URL', '')+'?token_valid=False')
 
         except DjangoUnicodeDecodeError as identifier:
             try:
                 if not PasswordResetTokenGenerator().check_token(user):
                     return CustomRedirect(redirect_url+'?token_valid=False')
-
             except UnboundLocalError as e:
                 return Response({'error': 'Token is not valid, please request a new one'}, status=status.HTTP_400_BAD_REQUEST)
 
