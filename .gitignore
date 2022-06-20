@@ -1,0 +1,15 @@
+/djangoIntern
+/venv
+/build
+/static
+/media
+whole.json
+*/__pycache__
+*/migrations/**/*.py
+*/migrations/**/__pycache__
+!*/migrations/**/__init__.py
+/staticfiles
+/media
+/react
+whole.json
+*.sqlite3
