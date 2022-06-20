@@ -14,8 +14,8 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATE_DIR = os.path.join(BASE_DIR,"ddmapp/templates")
-STATIC_DIR = os.path.join(BASE_DIR,"staticfiles")
+TEMPLATE_DIR = os.path.join(BASE_DIR, "ddmapp/templates")
+STATIC_DIR = os.path.join(BASE_DIR, "static")
 
 
 # Quick-start development settings - unsuitable for production
@@ -48,18 +48,18 @@ INSTALLED_APPS = [
     'notifications',
     'parserapp',
     'chat',
-    'react',
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
 ]
 
+# Whitenoise middleware added
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -67,7 +67,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'dynamicmodels.urls'
 
-#Dynamic Models Configuration
+# Dynamic Models Configuration
 DYNAMIC_MODELS = {
     'DEFAULT_CHARFIELD_MAX_LENGTH': 255,
     # 'CACHE_TIMEOUT': 10,
@@ -75,11 +75,11 @@ DYNAMIC_MODELS = {
     'CACHE_KEY_PREFIX': 'ddmapp_',
 }
 
-# print(os.path.join(BASE_DIR, 'build'))
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATE_DIR, os.path.join(BASE_DIR,"reactFrontEnd/templates"), ],
+        # Django knows where to find the main index.js file
+        'DIRS': [TEMPLATE_DIR, os.path.join(BASE_DIR, 'build'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -92,6 +92,11 @@ TEMPLATES = [
     },
 ]
 
+STATICFILES_DIRS = [
+    # Tell Django where to look for static files for react app.
+    os.path.join(BASE_DIR, 'build/static'),
+]
+
 ASGI_APPLICATION = 'dynamicmodels.asgi.application'
 WSGI_APPLICATION = 'dynamicmodels.wsgi.application'
 
@@ -101,12 +106,8 @@ WSGI_APPLICATION = 'dynamicmodels.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'recruitmentPortal',
-        'USER' : 'postgres',
-        'PASSWORD' : 'mydb@123',
-        'HOST' : 'localhost',
-        'PORT' : '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db5.sqlite3'),
     }
 }
 
@@ -135,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -148,60 +149,81 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-
-REST_FRAMEWORK={
+<< << << < HEAD
+REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-       'rest_framework.permissions.AllowAny',
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
-    ],
-    
-    
-}   
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:3001",
-    "http://192.168.1.6:3000",
-    "https://sanskarbiyani.github.io",
-]
-DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-DATE_INPUT_FORMATS = ['%d-%m-%Y']
+        'rest_framework.permissions.AllowAny',
+        == == == =
 
-STATIC_URL = '/static/'
-STATIC_ROOT = STATIC_DIR
-
-AUTH_USER_MODEL = "users.NewUser"
+        REST_FRAMEWORK= {
+            'DEFAULT_PERMISSION_CLASSES': [
+                'rest_framework.permissions.AllowAny',
+                >>>>>> > 95ae8db0fba198080d12019d09c3fa7483f07697
+            ],
+            'DEFAULT_AUTHENTICATION_CLASSES': [
+                'rest_framework_simplejwt.authentication.JWTAuthentication'
+            ],
+            << << << < HEAD
 
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': SECRET_KEY,
-    'VERIFYING_KEY': None,
-    'AUTH_HEADER_TYPES': ('JWT',),
-    'USER_ID_FIELD': 'id',
-    'USER_ID_CLAIM': 'user_id',
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
-    'TOKEN_TYPE_CLAIM': 'token_type',
-}
+        }
+        CORS_ALLOWED_ORIGINS= [
+            "http://localhost:3000",
+            "http://192.168.1.6:3000",
+            "http://localhost:8000",
+            == == == =
 
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.office365.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'Kshitija.Supekar.external@idiada.com'
-EMAIL_HOST_PASSWORD = 'NRp78e6XV$'
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+        }
+        CORS_ALLOWED_ORIGINS= [
+            "http://localhost:3000",
+            "http://192.168.1.6:3000",
+            >>>>>> > 95ae8db0fba198080d12019d09c3fa7483f07697
+            "https://sanskarbiyani.github.io",
+        ]
+        DEFAULT_AUTO_FIELD= 'django.db.models.AutoField'
+        DATE_INPUT_FORMATS= ['%d-%m-%Y']
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
-    },  
+        STATIC_URL= '/static/'
+        STATIC_ROOT= STATIC_DIR
+
+        AUTH_USER_MODEL= "users.NewUser"
+
+
+        SIMPLE_JWT= {
+            'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
+            'REFRESH_TOKEN_LIFETIME': timedelta(days=10),
+            'ROTATE_REFRESH_TOKENS': True,
+            'BLACKLIST_AFTER_ROTATION': True,
+            'ALGORITHM': 'HS256',
+            'SIGNING_KEY': SECRET_KEY,
+            'VERIFYING_KEY': None,
+            'AUTH_HEADER_TYPES': ('JWT',),
+            'USER_ID_FIELD': 'id',
+            'USER_ID_CLAIM': 'user_id',
+            'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+            'TOKEN_TYPE_CLAIM': 'token_type',
+        }
+
+        EMAIL_USE_TLS= True
+        EMAIL_HOST= 'smtp.office365.com'
+        EMAIL_PORT= 587
+        EMAIL_HOST_USER= 'Kshitija.Supekar.external@idiada.com'
+        EMAIL_HOST_PASSWORD= 'NRp78e6XV$'
+
+        MEDIA_ROOT= os.path.join(BASE_DIR, 'media')
+        MEDIA_URL= '/media/'
+
+        CHANNEL_LAYERS= {
+            "default": {
+                "BACKEND": "channels.layers.InMemoryChannelLayer"
+                << << << < HEAD
+            },
+        }
+
+        STATICFILES_STORAGE= "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        == == == =
+    },
 }
 
 # STATICFILES_DIRS = [
@@ -209,3 +231,4 @@ CHANNEL_LAYERS = {
 # ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+>>>>>> > 95ae8db0fba198080d12019d09c3fa7483f07697

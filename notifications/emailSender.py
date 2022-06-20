@@ -10,19 +10,24 @@ from django.db.models import Q
 from django.core.mail import send_mail
 from django.core.exceptions import ObjectDoesNotExist
 
+
 def getQuerySet(interval, field, notified, listModel, type, candidate):
     filter4 = {f'{type}': interval}
-    require_datetime = datetime.now() + timedelta(**filter4) - timedelta(hours=5, minutes=30)
+    require_datetime = datetime.now() + timedelta(**filter4) - \
+        timedelta(hours=5, minutes=30)
     print(f"Require Time: {require_datetime}")
-    filter1 = {field:None}
+    filter1 = {field: None}
     filter2 = {f'{field}__lte': require_datetime}
     filter3 = {f'{field}__gt': datetime.now() - timedelta(hours=5, minutes=30)}
-    notifications = list(listModel.objects.filter(~Q(**filter1) & Q(**filter2) & Q(**filter3)).values(field, notified, candidate))
+    notifications = list(listModel.objects.filter(
+        ~Q(**filter1) & Q(**filter2) & Q(**filter3)).values(field, notified, candidate))
     return notifications
+
 
 def filterAndSendMails(results, obj, field, notified, candidate):
     for result in results:
-        send_emails(time=result[field], interviewers=result[notified], candidate=result[candidate])
+        send_emails(
+            time=result[field], interviewers=result[notified], candidate=result[candidate])
         # if obj.last_email_sent == None:
         #     print("Sending the first email for the table.")
         #     newEmailSent = {
@@ -57,18 +62,19 @@ def EmailSenderQuaterly():
         print("No Objects Found.")
         return
     for result in results:
-        print("Results are: ");
-        print(result.candidate_field_name.id);
-        listModel = apps.get_model(app_label=str('ddmapp'), model_name=result.list_name.name)
+        print("Results are: ")
+        print(result.candidate_field_name.id)
+        listModel = apps.get_model(app_label=str(
+            'ddmapp'), model_name=result.list_name.name)
         field_name = result.time_field_name.name.lower().replace(' ', '_')
         notified_name = result.interviewer_field_name.name.lower().replace(' ', '_')
         candidate_field = result.candidate_field_name.name.lower().replace(' ', '_')
-        notifications = getQuerySet(interval=20 , type="minutes", field=field_name, notified=notified_name, listModel=listModel, candidate=candidate_field)
-        filterAndSendMails(notifications, result, field_name, notified_name, candidate=candidate_field)
+        notifications = getQuerySet(interval=20, type="minutes", field=field_name,
+                                    notified=notified_name, listModel=listModel, candidate=candidate_field)
+        filterAndSendMails(notifications, result, field_name,
+                           notified_name, candidate=candidate_field)
         # for notification in notifications:
         #     print(notification)
-        
-        
 
 
 def send_emails(**kwargs):
@@ -85,7 +91,7 @@ def send_emails(**kwargs):
             'Interview Scheduled',
             email_body,
             'Kshitija.Supekar.external@idiada.com',
-            [interviewer['email']], # Can we wrong.
+            [interviewer['email']],  # Can we wrong.
         )
 
 # require_datetime = datetime.now() + timedelta(minutes=15) - timedelta(hours=5, minutes=30)
@@ -126,4 +132,3 @@ def send_emails(**kwargs):
 #         result.last_email_sent = json.dumps(obj, default=str)
 #         result.save()
 #         send_emails(time=notification[field_name], candidate=candidate, interviewers=notification[notified_name])
-    

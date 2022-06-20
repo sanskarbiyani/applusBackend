@@ -1,5 +1,4 @@
 /djangoIntern
-/venv
 /build
 /static
 /media
@@ -12,4 +11,3 @@ whole.json
 /media
 /react
 whole.json
-*.sqlite3
